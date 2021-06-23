@@ -42,3 +42,13 @@ export interface Results {
   campgrounds: Array<Campground>;
   status: boolean;
 }
+
+export interface User {
+  id: number;
+  uid: string;
+}
+
+export interface EmailPasswordCredentials {
+  email: string;
+  password: string;
+}
