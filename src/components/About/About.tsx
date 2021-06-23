@@ -4,7 +4,7 @@ interface AboutProps {
 
 }
 
-export const About: React.FC<AboutProps> = ({}) => {
+export const About: React.FC<AboutProps> = () => {
   return (
     <div className="flex h-noheader">
       <article className="flex flex-col px-3 m-auto font-sans text-center">

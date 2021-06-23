@@ -4,7 +4,7 @@ interface ResultsNotFoundProps {
 
 }
 
-export const ResultsNotFound: React.FC<ResultsNotFoundProps> = ({}) => {
+export const ResultsNotFound: React.FC<ResultsNotFoundProps> = () => {
   return (
     <div>Results Not Found</div>
   );

@@ -28,7 +28,7 @@ const MenuItem: React.FC<MenuInputProps> = ({ label, guests, update }) => {
   );
 }
 
-export const GuestsInput: React.FC<GuestsInputProps> = ({ }) => {
+export const GuestsInput: React.FC<GuestsInputProps> = () => {
   const { formData, setGuests } = useSearchContext();
 
   const updateAdults = (change: number): void => {

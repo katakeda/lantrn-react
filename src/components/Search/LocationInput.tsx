@@ -9,7 +9,7 @@ interface LocationInputProps {
 
 let autocomplete: any;
 
-export const LocationInput: React.FC<LocationInputProps> = ({}) => {
+export const LocationInput: React.FC<LocationInputProps> = () => {
   const { setLocation } = useSearchContext();
   const autoCompleteRef = useRef<HTMLInputElement>({} as HTMLInputElement);
 
@@ -28,6 +28,7 @@ export const LocationInput: React.FC<LocationInputProps> = ({}) => {
     }
     autocomplete = new google.maps.places.Autocomplete(autoCompleteRef.current, options);
     autocomplete.addListener('place_changed', handlePlaceChange)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

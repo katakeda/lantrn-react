@@ -7,7 +7,7 @@ interface ResultsProps {
 
 }
 
-export const Results: React.FC<ResultsProps> = ({ }) => {
+export const Results: React.FC<ResultsProps> = () => {
   const location = useLocation();
   const results = location.state as ResultsInterface;
 

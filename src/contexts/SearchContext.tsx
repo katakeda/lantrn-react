@@ -30,7 +30,7 @@ const SearchContext: React.Context<SearchData> = createContext({} as SearchData)
 
 export const SearchProvider: React.FC = ({ children }) => {
   const history = useHistory();
-  const { toggleLoading } = useAppContext();
+  const { toggleLoading, toggleError } = useAppContext();
   const [formData, setFormData] = useState<FormData>({ adults: 0, children: 0 } as FormData);
 
   const setLocation = (latitude: number, longitude: number): void => {
@@ -61,7 +61,7 @@ export const SearchProvider: React.FC = ({ children }) => {
     }
 
     const errorHandler = (error: any): void => {
-
+      toggleError(error);
     }
 
     asyncRequest<void>({

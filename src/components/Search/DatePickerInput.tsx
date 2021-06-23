@@ -10,8 +10,8 @@ interface DatePickerInputProps {
 
 }
 
-export const DatePickerInput: React.FC<DatePickerInputProps> = ({}) => {
-  const { setDates, formData } = useSearchContext();
+export const DatePickerInput: React.FC<DatePickerInputProps> = () => {
+  const { setDates } = useSearchContext();
   const [dateRange, setDateRange] = useState<DateRange>([null, null]);
   const [startDate, endDate] = dateRange;
 

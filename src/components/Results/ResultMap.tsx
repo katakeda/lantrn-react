@@ -48,7 +48,9 @@ export const ResultMap: React.FC<ResultMapProps> = ({ campgrounds, state }) => {
     }
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(initMap, [])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(toggleInfoWindow, [state.focused])
 
   return (

@@ -12,7 +12,7 @@ interface HomeProps {
 
 }
 
-export const Home: React.FC<HomeProps> = ({}) => {
+export const Home: React.FC<HomeProps> = () => {
   return (
     <section className="px-3 bg-gray-50">
       <img src={hikingImg} alt="logo" className="py-8 h-64 w-64 mx-auto" />

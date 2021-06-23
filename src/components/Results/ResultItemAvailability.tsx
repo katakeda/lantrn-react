@@ -20,6 +20,7 @@ export const ResultItemAvailability: React.FC<ResultItemAvailabilityProps> = ({ 
     setAvailableDates(new Set(tmp));
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(initAvailabilities, [])
 
   return (

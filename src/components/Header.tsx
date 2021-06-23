@@ -5,7 +5,7 @@ interface HeaderProps {
 
 }
 
-export const Header: React.FC<HeaderProps> = ({}) => {
+export const Header: React.FC<HeaderProps> = () => {
   return (
     <header>
       <Navbar />

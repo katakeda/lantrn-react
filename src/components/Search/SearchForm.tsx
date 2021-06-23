@@ -9,7 +9,7 @@ interface SearchFormProps {
 
 }
 
-export const SearchForm: React.FC<SearchFormProps> = ({}) => {
+export const SearchForm: React.FC<SearchFormProps> = () => {
   const { submitForm } = useSearchContext();
 
   return (

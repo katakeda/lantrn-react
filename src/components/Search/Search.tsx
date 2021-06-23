@@ -6,7 +6,7 @@ interface SearchProps {
 
 }
 
-export const Search: React.FC<SearchProps> = ({}) => {
+export const Search: React.FC<SearchProps> = () => {
   return (
     <SearchProvider>
       <section className="py-5 px-3 mx-3 bg-white shadow-lg rounded-md md:rounded-full">
