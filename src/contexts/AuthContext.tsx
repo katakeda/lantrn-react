@@ -1,4 +1,5 @@
 import React, { useContext, createContext, useState, useEffect } from 'react'
+import { useHistory } from 'react-router';
 import firebase from 'firebase';
 import * as firebaseUtil from '../utils/firebase';
 import { asyncRequest } from '../utils/common';
@@ -21,19 +22,33 @@ export const AuthProvider: React.FC = ({ children }) => {
   const { toggleError } = useAppContext();
   const [user, setUser] = useState<User | null>(null);
   const [authError, setAuthError] = useState<string | null>(null);
+  const history = useHistory();
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(async (user) => {
       handleRedirect();
     })
+    initUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const initUser = () => {
     if (sessionStorage.getItem('id_token')) {
       const id_token = sessionStorage.getItem('id_token');
-      const errorHandler = (error: any) => { toggleError(error) }
+
       const handler = (results: any) => {
         if (results.status) {
           setUser(results.user);
+        } else {
+          setAuthError(results.message);
+          history.push('/login');
         }
       }
+
+      const errorHandler = (error: any) => {
+        toggleError(error);
+      }
+
       asyncRequest<void>({
         url: USER_LOGIN_API_ENDPOINT,
         body: JSON.stringify({ id_token }),
@@ -41,15 +56,21 @@ export const AuthProvider: React.FC = ({ children }) => {
         errorHandler,
       })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }
 
   const handleRedirect = async (): Promise<void> => {
     const redirectResult: firebase.auth.UserCredential = await firebase.auth().getRedirectResult();
     if (redirectResult.user) {
       const id_token = await redirectResult?.user?.getIdToken();
-      const handler = (results: any) => { setUser(results.user) }
-      const errorHandler = (error: any) => { toggleError(error) }
+    
+      const handler = (results: any) => {
+        setUser(results.user);
+      }
+
+      const errorHandler = (error: any) => {
+        toggleError(error);
+      }
+
       asyncRequest<void>({
         url: USER_SIGNUP_API_ENDPOINT,
         body: JSON.stringify({ id_token }),
@@ -63,8 +84,15 @@ export const AuthProvider: React.FC = ({ children }) => {
     try {
       const userCredential = await firebaseUtil.signup({ email, password });
       const id_token = await userCredential?.user?.getIdToken();
-      const handler = (results: any) => { setUser(results.user) }
-      const errorHandler = (error: any) => { toggleError(error) }
+
+      const handler = (results: any) => {
+        setUser(results.user);
+      }
+
+      const errorHandler = (error: any) => {
+        toggleError(error);
+      }
+
       asyncRequest<void>({
         url: USER_SIGNUP_API_ENDPOINT,
         body: JSON.stringify({ id_token }),
@@ -80,7 +108,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     try {
       const userCredential = await firebaseUtil.login({ email, password });
       const id_token = await userCredential?.user?.getIdToken();
-      const errorHandler = (error: any) => { toggleError(error) }
+
       const handler = (results: any) => {
         if (results.status) {
           sessionStorage.setItem('id_token', id_token || '');
@@ -89,6 +117,11 @@ export const AuthProvider: React.FC = ({ children }) => {
           setAuthError(results.message);
         }
       }
+
+      const errorHandler = (error: any) => {
+        toggleError(error);
+      }
+
       asyncRequest<void>({
         url: USER_LOGIN_API_ENDPOINT,
         body: JSON.stringify({ id_token }),
