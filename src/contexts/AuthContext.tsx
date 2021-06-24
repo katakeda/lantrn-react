@@ -14,12 +14,13 @@ interface AuthData {
   setAuthError: React.Dispatch<React.SetStateAction<string | null>>;
   signup: ({ email, password }: EmailPasswordCredentials) => Promise<void>;
   login: ({ email, password }: EmailPasswordCredentials) => Promise<void>;
+  logout: () => void;
 }
 
 const AuthContext: React.Context<AuthData> = createContext({} as AuthData);
 
 export const AuthProvider: React.FC = ({ children }) => {
-  const { toggleError } = useAppContext();
+  const { toggleError, toggleLoading } = useAppContext();
   const [user, setUser] = useState<User | null>(null);
   const [authError, setAuthError] = useState<string | null>(null);
   const history = useHistory();
@@ -59,37 +60,48 @@ export const AuthProvider: React.FC = ({ children }) => {
   }
 
   const handleRedirect = async (): Promise<void> => {
-    const redirectResult: firebase.auth.UserCredential = await firebase.auth().getRedirectResult();
-    if (redirectResult.user) {
-      const id_token = await redirectResult?.user?.getIdToken();
-    
-      const handler = (results: any) => {
-        setUser(results.user);
-      }
+    try {
+      const redirectResult: firebase.auth.UserCredential = await firebase.auth().getRedirectResult();
+      if (redirectResult.user) {
+        toggleLoading(true);
+        const id_token = await redirectResult?.user?.getIdToken();
+      
+        const handler = (results: any) => {
+          toggleLoading(false);
+          setUser(results.user);
+        }
 
-      const errorHandler = (error: any) => {
-        toggleError(error);
-      }
+        const errorHandler = (error: any) => {
+          toggleLoading(false);
+          toggleError(error);
+        }
 
-      asyncRequest<void>({
-        url: USER_SIGNUP_API_ENDPOINT,
-        body: JSON.stringify({ id_token }),
-        handler,
-        errorHandler,
-      })
+        asyncRequest<void>({
+          url: USER_SIGNUP_API_ENDPOINT,
+          body: JSON.stringify({ id_token }),
+          handler,
+          errorHandler,
+        })
+      }
+    } catch (error) {
+      toggleLoading(false);
+      toggleError(error);
     }
   }
 
   const signup = async ({ email, password }: EmailPasswordCredentials): Promise<void> => {
     try {
+      toggleLoading(true);
       const userCredential = await firebaseUtil.signup({ email, password });
       const id_token = await userCredential?.user?.getIdToken();
 
       const handler = (results: any) => {
+        toggleLoading(false);
         setUser(results.user);
       }
 
       const errorHandler = (error: any) => {
+        toggleLoading(false);
         toggleError(error);
       }
 
@@ -100,16 +112,19 @@ export const AuthProvider: React.FC = ({ children }) => {
         errorHandler,
       })
     } catch (error) {
+      toggleLoading(false);
       toggleError(error);
     }
   }
 
   const login = async ({ email, password }: EmailPasswordCredentials): Promise<void> => {
     try {
+      toggleLoading(true);
       const userCredential = await firebaseUtil.login({ email, password });
       const id_token = await userCredential?.user?.getIdToken();
 
       const handler = (results: any) => {
+        toggleLoading(false);
         if (results.status) {
           sessionStorage.setItem('id_token', id_token || '');
           setUser(results.user);
@@ -119,6 +134,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       }
 
       const errorHandler = (error: any) => {
+        toggleLoading(false);
         toggleError(error);
       }
 
@@ -129,14 +145,26 @@ export const AuthProvider: React.FC = ({ children }) => {
         errorHandler,
       })
     } catch (error) {
+      toggleLoading(false);
       setAuthError('Invalid email or password');
     }
+  }
+
+  const logout = (): void => {
+    firebaseUtil.logout();
+    sessionStorage.removeItem('id_token');
+    setUser(null);
+    toggleLoading(true);
+    setTimeout(() => {
+      toggleLoading(false);
+      history.push('/login');
+    }, 1500);
   }
 
   const data = {
     user, setUser,
     authError, setAuthError,
-    signup, login,
+    signup, login, logout,
   }
 
   return (

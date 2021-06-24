@@ -23,6 +23,10 @@ export const login = async ({ email, password }: EmailPasswordCredentials): Prom
   return await firebase.auth().signInWithEmailAndPassword(email, password);
 }
 
+export const logout = async (): Promise<void> => {
+  await firebase.auth().signOut();
+}
+
 export const googleSignin = (): void => {
   firebase.auth().signInWithRedirect(new firebase.auth.GoogleAuthProvider());
 }

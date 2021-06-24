@@ -10,9 +10,11 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = () => {
   const [mobileMenu, setMobileMenu] = useState(false);
-  const { user } = useAuthContext();
+  const { user, logout } = useAuthContext();
 
   const toggleMenu = () => setMobileMenu((prev) => !prev);
+
+  const handleLogout = () => logout();
 
   return (
     <nav className="bg-gray-100">
@@ -32,7 +34,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
           <div className="hidden md:flex items-center space-x-1">
             <Link to="/about" className="py-5 px-3">About</Link>
             {user
-              ? <><span className="py-5 px-3 cursor-pointer">Log out</span></>
+              ? <><span className="py-5 px-3 cursor-pointer" onClick={handleLogout}>Log out</span></>
               : <>
                 <Link to="/login" className="py-5 px-3">Log in</Link>
                 <Link to="/signup" className="py-2 px-3 border-2 border-green-600 bg-green-600 text-white hover:bg-green-50 hover:text-green-600 rounded-full transform duration-500">Sign up</Link>
@@ -49,7 +51,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
             <ChevronRightIcon className="h-6 w-6" />
           </div>
           {user
-            ? <><div className="flex justify-between py-5 px-3 cursor-pointer"><span>Log out</span><ChevronRightIcon className="h-6 w-6" /></div></>
+            ? <><div className="flex justify-between py-5 px-3 cursor-pointer" onClick={handleLogout}><span>Log out</span><ChevronRightIcon className="h-6 w-6" /></div></>
             : <>
               <div className="flex justify-between py-5 px-3">
                 <Link to="/login" className="">Log in</Link>
