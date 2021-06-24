@@ -7,9 +7,7 @@ interface GoogleBtnProps {
 }
 
 export const GoogleBtn: React.FC<GoogleBtnProps> = () => {
-  const handleGoogleSignin = () => {
-    googleSignin();
-  }
+  const handleGoogleSignin = () => googleSignin();
 
   return (
     <span onClick={handleGoogleSignin} className="flex justify-center px-4 border-2 border-black hover:shadow-xl rounded-lg bg-white cursor-pointer">

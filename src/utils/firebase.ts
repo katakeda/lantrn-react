@@ -27,6 +27,6 @@ export const logout = async (): Promise<void> => {
   await firebase.auth().signOut();
 }
 
-export const googleSignin = (): void => {
-  firebase.auth().signInWithRedirect(new firebase.auth.GoogleAuthProvider());
+export const googleSignin = async (): Promise<void> => {
+  await firebase.auth().signInWithRedirect(new firebase.auth.GoogleAuthProvider());
 }
