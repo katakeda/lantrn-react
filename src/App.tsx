@@ -13,9 +13,9 @@ import { NotFound } from './components/NotFound';
 
 const App: React.FC = () => {
   return (
-    <AppProvider>
-      <AuthProvider>
-        <BrowserRouter>
+    <BrowserRouter>
+      <AppProvider>
+        <AuthProvider>
           <Header />
           <Main>
             <Switch>
@@ -27,9 +27,9 @@ const App: React.FC = () => {
               <Route path='*'><NotFound /></Route>
             </Switch>
           </Main>
-        </BrowserRouter>
-      </AuthProvider>
-    </AppProvider>
+        </AuthProvider>
+      </AppProvider>
+    </BrowserRouter>
   )
 }
 
