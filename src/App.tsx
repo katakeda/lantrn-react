@@ -9,6 +9,7 @@ import { Results } from './components/Results/Results';
 import { About } from './components/About/About';
 import { Signup } from './components/Auth/Signup';
 import { Login } from './components/Auth/Login';
+import { Detail } from './components/Facility/Detail/Detail';
 import { NotFound } from './components/NotFound';
 
 const App: React.FC = () => {
@@ -24,6 +25,7 @@ const App: React.FC = () => {
               <Route path='/login'><Login /></Route>
               <Route path='/about'><About /></Route>
               <Route path='/results'><Results /></Route>
+              <Route path='/facility/detail/:id'><Detail /></Route>
               <Route path='*'><NotFound /></Route>
             </Switch>
           </Main>
