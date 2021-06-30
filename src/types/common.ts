@@ -20,6 +20,11 @@ export interface Media {
   is_gallery: boolean;
 }
 
+export interface Recarea {
+  recarea_id: string;
+  recarea_name: string;
+}
+
 export interface Facility {
   facility_id: string;
   facility_name: string;
@@ -31,6 +36,7 @@ export interface Facility {
   reservable: boolean;
   enabled: boolean;
   medias: Array<Media>;
+  recarea: Recarea;
 }
 
 export interface Campground {
@@ -52,3 +58,9 @@ export interface EmailPasswordCredentials {
   email: string;
   password: string;
 }
+
+export interface UrlParams {
+  id: string;
+}
+
+export interface FacilityDetailUrlParams extends UrlParams {}
