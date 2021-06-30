@@ -46,21 +46,21 @@ export const Navbar: React.FC<NavbarProps> = () => {
       </div>
       {mobileMenu && (
         <div className="mobile-menu md:hidden">
-          <div className="flex justify-between py-5 px-3">
-            <Link to="/about">About</Link>
+          <Link to="/about" className="flex justify-between py-5 px-3">
+            <span>About</span>
             <ChevronRightIcon className="h-6 w-6" />
-          </div>
+          </Link>
           {user
             ? <><div className="flex justify-between py-5 px-3 cursor-pointer" onClick={handleLogout}><span>Log out</span><ChevronRightIcon className="h-6 w-6" /></div></>
             : <>
-              <div className="flex justify-between py-5 px-3">
-                <Link to="/login" className="">Log in</Link>
+              <Link to="/login" className="flex justify-between py-5 px-3">
+                <span>Log in</span>
                 <ChevronRightIcon className="h-6 w-6" />
-              </div>
-              <div className="flex justify-between py-5 px-3">
-                <Link to="/signup">Sign up</Link>
+              </Link>
+              <Link to="/signup" className="flex justify-between py-5 px-3">
+                <span>Sign up</span>
                 <ChevronRightIcon className="h-6 w-6" />
-              </div>
+              </Link>
             </>
           }
         </div>

@@ -18,6 +18,8 @@ module.exports = {
     extend: {
       backgroundColor: ['active'],
       textColor: ['active'],
+      outline: ['active'],
+      userSelect: ['active'],
     }
   },
   plugins: [],
