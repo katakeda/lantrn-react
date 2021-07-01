@@ -48,7 +48,7 @@ export const ResultItemAvailability: React.FC<ResultItemAvailabilityProps> = ({ 
               >
                 {Array.from(availableDates).map((date, key) => (
                   <div key={key} className="py-3 shadow-sm cursor-pointer hover:shadow-lg">
-                    <span>{moment(date).format('M/D/Y')} ({moment(date).format('ddd')})</span>
+                    <span>{moment(date).utc().format('M/D/Y')} ({moment(date).utc().format('ddd')})</span>
                   </div>
                 ))}
               </Menu.Items>
