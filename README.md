@@ -2,4 +2,25 @@
 
 Frontend for Lantrn created in React.js
 
--![A screenshot of your package](https://f.cloud.github.com/assets/69169/2290250/c35d867a-a017-11e3-86be-cd7c5bf3ff9b.gif)
+## .env
+Create at `.env` in the root of this project and set the following variables (Must have GCP account):
+```
+REACT_APP_GOOGLE_API_KEY=
+REACT_APP_FIREBASE_API_KEY=
+REACT_APP_FIREBASE_AUTH_DOMAIN=
+REACT_APP_FIREBASE_PROJECT_ID=
+REACT_APP_FIREBASE_STORAGE_BUCKET=
+REACT_APP_FIREBASE_MESSAGING_SENDER_ID=
+REACT_APP_FIREBASE_APP_ID=
+REACT_APP_FIREBASE_MEASUREMENT_ID=
+```
+
+## Install dependencies
+```
+npm install
+```
+
+## Getting Started
+```
+npm start
+```
