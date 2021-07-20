@@ -20,6 +20,14 @@ export interface Media {
   is_gallery: boolean;
 }
 
+export interface Review {
+  review_id: number;
+  facility_id: string;
+  uid: string;
+  rating: number;
+  comment: string;
+}
+
 export interface Recarea {
   recarea_id: string;
   recarea_name: string;
@@ -36,6 +44,7 @@ export interface Facility {
   reservable: boolean;
   enabled: boolean;
   medias: Array<Media>;
+  reviews: Array<Review>;
   recarea: Recarea;
 }
 

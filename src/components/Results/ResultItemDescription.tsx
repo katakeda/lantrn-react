@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Campground } from '../../types/common';
 
 interface ResultItemDescriptionProps {
@@ -8,7 +9,7 @@ interface ResultItemDescriptionProps {
 export const ResultItemDescription: React.FC<ResultItemDescriptionProps> = ({ campground }) => {
   return (
     <>
-      <span className="font-semibold text-base">{campground.facility.facility_name}</span>
+      <Link className="font-semibold text-base text-blue-400" to={`/facility/detail/${campground.facility.facility_id}`}>{campground.facility.facility_name}</Link>
     </>
   );
 }
