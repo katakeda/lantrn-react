@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppContext } from '../../../contexts/AppContext';
-import { asyncRequest } from '../../../utils/common';
-import { Facility_DETAIL_API_ENDPOINT } from '../../../utils/constants';
+import { asyncRequest, classNames } from '../../../utils/common';
+import { FACILITY_AVAILABILITY_API_ENDPOINT, FACILITY_DETAIL_API_ENDPOINT } from '../../../utils/constants';
 import { FacilityDetailUrlParams, Facility } from '../../../types/common';
 import { Amenities } from './Amenities';
+import { AvailabilityCalendar } from './AvailabilityCalendar';
 import { Availability } from './Availability';
 import { Description } from './Description';
 import { Images } from './Images';
@@ -19,6 +20,7 @@ export const Detail: React.FC<DetailProps> = () => {
   const { toggleError } = useAppContext();
   const { id } = useParams<FacilityDetailUrlParams>();
   const [facility, setFacility] = useState<Facility>({} as Facility);
+  const [showCalendar, setShowCalendar] = useState<boolean>(false);
 
   useEffect(() => {
     getFacility({ facility_id: id });
@@ -39,25 +41,46 @@ export const Detail: React.FC<DetailProps> = () => {
     }
 
     asyncRequest<void>({
-      url: Facility_DETAIL_API_ENDPOINT,
+      url: FACILITY_DETAIL_API_ENDPOINT,
       body: JSON.stringify({ facility_id }),
       handler,
       errorHandler,
     })
   }
 
+  const getFacilityAvailability = ({ facility_id, date }: { facility_id: string, date: Date }): Promise<void | Array<string>> => {
+    const handler = (results: any): Array<string> => {
+      if (results.status) {
+        return results.availability;
+      }
+
+      toggleError(results.message);
+
+      return [];
+    }
+
+    const errorHandler = (error: any) => {
+      toggleError(error);
+    }
+
+    return asyncRequest<Array<string>>({
+      url: FACILITY_AVAILABILITY_API_ENDPOINT,
+      body: JSON.stringify({ facility_id, date }),
+      handler,
+      errorHandler,
+    })
+  }
+
   return facility.facility_id ? (
-    <div>
-      <div>
-        <section><Images facility={facility} /></section>
-        <section><Info facility={facility} /></section>
-        <section><Description facility={facility} /></section>
-        <section><Amenities facility={facility} /></section>
-        <section><Map facility={facility} /></section>
-      </div>
-      <div>
-        <section><Availability facility={facility} /></section>
-      </div>
+    <div className={classNames("h-noheader", showCalendar && "overflow-y-hidden")}>
+      <section><Images facility={facility} /></section>
+      <section><Info facility={facility} /></section>
+      <section><Description facility={facility} /></section>
+      <section><Amenities facility={facility} /></section>
+      <section><Map facility={facility} /></section>
+      <section><Availability facility={facility} state={{ showCalendar, setShowCalendar }} /></section>
+      <section><AvailabilityCalendar facility={facility} state={{ showCalendar, setShowCalendar }} /></section>
+      <section className="h-16"></section>
     </div>
   ) : <></>;
 }

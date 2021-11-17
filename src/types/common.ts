@@ -48,8 +48,11 @@ export interface Facility {
   recarea: Recarea;
 }
 
-export interface Campground {
+export interface FacilityDetail {
   facility: Facility;
+}
+
+export interface Campground extends FacilityDetail {
   sites: Record<number, Array<Date>>;
 }
 

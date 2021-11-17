@@ -45,7 +45,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
         </div>
       </div>
       {mobileMenu && (
-        <div className="mobile-menu md:hidden">
+        <div className="md:hidden">
           <Link to="/about" className="flex justify-between py-5 px-3">
             <span>About</span>
             <ChevronRightIcon className="h-6 w-6" />

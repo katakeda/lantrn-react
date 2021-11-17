@@ -29,7 +29,7 @@ export const ResultItemAvailability: React.FC<ResultItemAvailabilityProps> = ({ 
         {({ open }) => (
           <>
             <div>
-              <Menu.Button className="inline-flex justify-center w-full rounded-md py-2 text-gray-800 ring-2 focus:outline-none whitespace-nowrap">
+              <Menu.Button className="inline-flex justify-center w-full rounded-md py-2 text-gray-800 border-2 border-green-600 focus:outline-none whitespace-nowrap">
                 Check Availability
               </Menu.Button>
             </div>
